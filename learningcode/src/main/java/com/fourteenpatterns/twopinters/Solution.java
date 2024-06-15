@@ -28,14 +28,14 @@ public class Solution {
             return true;
         }
         while (p1>=0 && p2>=0) {
-            System.out.println(p1+ " "+p2);
+            System.out.println("Iteration "+p1+ " "+p2);
             if (s.charAt(p1) != t.charAt(p2)) {
                 return false;
             }
             p1 = getNextPointer(s,p1);
-            System.out.println(p1);
+            System.out.println("p1 :"+p1);
             p2 = getNextPointer(t,p2);
-            System.out.println(p2);
+            System.out.println("p2 :"+p2);
         }
         System.out.println("final :"+p1+ " "+p2);
         if(p1==p2) {
@@ -46,23 +46,30 @@ public class Solution {
 
     private static int getNextPointer(String s, int p) {
         System.out.println("String "+s+" p "+p);
-        if(p<0) {
-            return p;
+        if(p<=0) {
+            return -1;
         }
         int bckSpcCount = 0;
-        if(s.charAt(p-1)!='#') {
-            return p-1;
-        }
-        bckSpcCount++;
-        while(bckSpcCount>0) {
-            p--;
-            if(p<0) {
-                return -1;
+        if(s.charAt(p)=='#') {
+            bckSpcCount++;
+            while(bckSpcCount>0) {
+                System.out.println(bckSpcCount+" ; "+p);
+                p--;
+                if(p<0) {
+                    return 0;
+                }
+                if(s.charAt(p)=='#') {
+                    bckSpcCount++;
+                }
+                bckSpcCount--;
             }
-            if(s.charAt(p)=='#') {
-                bckSpcCount++;
+        } else {
+            if(s.charAt(p-1)=='#') {
+                return getNextPointer(s,p-1);
+            } else {
+                return p - 1;
             }
         }
-        return -1;
+        return p-1;
     }
 }
