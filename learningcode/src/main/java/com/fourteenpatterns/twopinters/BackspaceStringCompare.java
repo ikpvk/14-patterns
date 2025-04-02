@@ -19,59 +19,50 @@ Explanation: Both s and t become "".
 public class BackspaceStringCompare {
 
     public static void main(String[] args) {
-        String s = "nzp#o#g", t = "b#nzp#o#g";
+        String s = "a", t = "aa#a";
         System.out.println(areStringsEqual(s, t));
 //        System.out.println(getNextPointer("asbc##",1));
     }
 
     public static boolean areStringsEqual(String s, String t) {
-        // Initialize two pointers for iterating through the strings in reverse.
-        int pointerS = s.length() - 1, pointerT = t.length() - 1;
-        // Variables to keep track of the number of backspaces found.
-        int skipS = 0, skipT = 0;
-
-        // Continue comparing characters until both pointers go beyond the start of the string.
-        while (pointerS >= 0 || pointerT >= 0) {
-            // Process backspaces in string s.
-            while (pointerS >= 0) {
-                if (s.charAt(pointerS) == '#') {
-                    skipS++; // We found a backspace character.
-                    pointerS--; // Move one character back.
-                } else if (skipS > 0) {
-                    skipS--; // Reduce the backspace count.
-                    pointerS--; // Skip over this character.
+        int p1 = s.length()-1;
+        int p2 = t.length()-1;
+        while(p1>=0 || p2>=0) {
+            int backSpaces = 0;
+            while(p1>=0) {
+                if (s.charAt(p1)=='#') {
+                    backSpaces++;
+                    p1--;
+                } else if (backSpaces>0) {
+                    backSpaces--;
+                    p1--;
                 } else {
-                    break; // Found a character to compare.
-                }
-            }
-            // Process backspaces in string t.
-            while (pointerT >= 0) {
-                if (t.charAt(pointerT) == '#') {
-                    skipT++; // We found a backspace character.
-                    pointerT--; // Move one character back.
-                } else if (skipT > 0) {
-                    skipT--; // Reduce the backspace count.
-                    pointerT--; // Skip over this character.
-                } else {
-                    break; // Found a character to compare.
+                    break;
                 }
             }
 
-            // Compare the characters of both strings.
-            if (pointerS >= 0 && pointerT >= 0) {
-                // If characters do not match, return false.
-                if (s.charAt(pointerS) != t.charAt(pointerT)) {
+            backSpaces = 0;
+            while(p2>=0) {
+                if (t.charAt(p2)=='#') {
+                    backSpaces++;
+                    p2--;
+                } else if (backSpaces>0) {
+                    backSpaces--;
+                    p2--;
+                } else {
+                    break;
+                }
+            }
+            if(p1 >=0 && p2>=0) {
+                if (s.charAt(p1) != t.charAt(p2)) {
                     return false;
                 }
-            } else if (pointerS >= 0 || pointerT >= 0) {
-                // If one pointer has reached the start but the other has not, they do not match.
+            } else if (p1>=0 || p2>=0){
                 return false;
             }
-            // Move to the next characters to compare.
-            pointerS--;
-            pointerT--;
+            p1--;
+            p2--;
         }
-        // All characters match considering the backspace characters.
         return true;
     }
 }
