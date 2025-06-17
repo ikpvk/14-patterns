@@ -1,18 +1,8 @@
-package com.fourteenpatterns.slidingwindow;
-
+package slidingwindow;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Solution {
-/*
-Given two strings s and p, 
-return an array of all the start indices of p's anagrams in s. 
-You may return the answer in any order.
-
-Input: s = "abab", p = "ab"
-Output: [0,1,2]
-*/    
-
+public class Anagram {
     public static void main(String[] args) {
         String s = "abab", p = "ab";
         for(Integer i : solution(s,p)) {
